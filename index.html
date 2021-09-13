@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./CSS/style.css">
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js" integrity="sha512-Wt1bJGtlnMtGP0dqNFH1xlkLBNpEodaiQ8ZN5JLA5wpc1sUlk/O5uuOMNgvzddzkpvZ9GLyYNa8w2s7rqiTk5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script defer src="./main.js"></script>
   <title>Document</title>
 </head>
@@ -66,7 +67,7 @@
               </li>
             </ul>
           </div>
-          <!-- 사용내역 -->
+          <!-- 세부 사용내역 -->
           <div class="use_history_detail">
             <ul>
               <!-- 오늘 사용내역 -->
@@ -127,41 +128,75 @@
                   </li>
                 </ul>
               </li>
+              <!-- 어제 사용내역 -->
+              <li class="daily_used">
+                <div class="day_info">
+                  <span class="date">어제</span>
+                  <span class="day_total">127,600원</span>
+                </div>
+                <ul class="daily_used_list">
+                  <li>
+                    <span class="used_name">미스터피자</span>
+                    <span class="used_amount">32,000</span>
+                  </li>
+                  <li>
+                    <span class="used_name">미스터피자</span>
+                    <span class="used_amount">32,000</span>
+                  </li>
+                  <li>
+                    <span class="used_name">미스터피자</span>
+                    <span class="used_amount">32,000</span>
+                  </li>
+                  <li>
+                    <span class="used_name">미스터피자</span>
+                    <span class="used_amount">32,000</span>
+                  </li>
+                  <li>
+                    <span class="used_name">미스터피자</span>
+                    <span class="used_amount">32,000</span>
+                  </li>
+                </ul>
+              </li>
+              <!-- 여기까지 지우기 -->
             </ul>
           </div>
         </section>
       </main>
       <!-- 지출관리 설정 page -->
       <div class="out_manage_page">
-        <h1>지출관리</h1>
-        <section class="set_budget">
-          <h3>기준금액설정</h3>
-          <span>2,100,000원</span>
-          <div>
-            <input class="budget_setting_bar" type="range" alt="지출금액 설정바">
-          </div>
-        </section>
-        <section class="daily_report">
-          <h3>일간 리포트</h3>
-          <canvas class ="bar_graph"></canvas>
-        </section>
-        <section class="monthly_out_pattern">
+        <div class="header">
+          <h1>지출관리</h1>
+        </div>
+        <div class="main_content_warp">
+          <section class="set_budget">
+            <h3>기준금액설정</h3>
+            <span>2,100,000원</span>
+            <div>
+              <input class="budget_setting_bar" type="range" alt="지출금액 설정바">
+            </div>
+          </section>
+          <section class="daily_report">
+            <h3>일간 리포트</h3>
+            <canvas class ="bar_graph"></canvas>
+          </section>
+          <section class="monthly_out_pattern">
             <h3>6월 지출패턴</h3>
             <div class ="donut_graph">
               <canvas></canvas>
               <div><span>1,736,500</span><span>원</span></div>
             </div>
             <ul class ="out_category">
-                <li><img src="./images/car.svg" alt="주유비 아이콘"/><span class="left">주유비</span><span class="right">50,000원</span></li>
-                <li><img src="./images/health.svg" alt="건강 아이콘"/><span class="left">건강관리비</span><span class="right">80,000원</span></li>
-                <li><img src="./images/eat.svg" alt="식비 아이콘"/><span class="left">외식비</span><span class="right">233,000원</span></li>
-                <li><img src="./images/grocery.svg" alt="장보기 아이콘"/><span class="left">장보기</span><span class="right">390,000원</span></li>
-                <li><img src="./images/shopping.svg" alt="상점 아이콘"/><span class="left">상점</span><span class="right">46,000원</span></li>
+              <li><img src="./images/car.svg" alt="주유비 아이콘"/><span class="left">주유비</span><span class="right">50,000원</span></li>
+              <li><img src="./images/health.svg" alt="건강 아이콘"/><span class="left">건강관리비</span><span class="right">80,000원</span></li>
+              <li><img src="./images/eat.svg" alt="식비 아이콘"/><span class="left">외식비</span><span class="right">233,000원</span></li>
+              <li><img src="./images/grocery.svg" alt="장보기 아이콘"/><span class="left">장보기</span><span class="right">390,000원</span></li>
+              <li><img src="./images/shopping.svg" alt="상점 아이콘"/><span class="left">상점</span><span class="right">46,000원</span></li>
             </ul>
-        </section>
-        <button type="button">닫기</button>
+          </section>
+        </div>
+          <button type="button">닫기</button>
+        </div>
       </div>
-    </div>
       <!-- 하단 메뉴 -->
       <nav>
         <ul>
