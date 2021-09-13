@@ -5,6 +5,7 @@ button{
 ul,li{
   list-style: none;
 }
+a{cursor: pointer;}
 /* css작업을 위한 설정 */
 body{
   padding: 20px;
@@ -16,12 +17,19 @@ body{
   min-width: 375px;
   height: 812px;
   border: 3px solid black;
-  background-color: #EEEBE5;
+  background-color: yellow;
 }
 /* safe area */
 .safe_area{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
   height: 44px;
-  background-color: lightpink;
+  box-sizing: border-box;
+  border: 1px solid black;
+  background-color: transparent;
+  z-index: 999;
 }
 /* 페이지 하단 nav */
 nav{
@@ -30,12 +38,13 @@ nav{
   right: 0;
   left: 0;
   height: 58px;
-  background-color: mediumseagreen;
+  background-color: #00C7A3;
+  z-index: 999;
 }
 /* 페이지 영역 스크린 설정(header, nav제외) */
 .app_screen{
-  height: 710px;
-  overflow: hidden;
+  height: 754px;
+  /* overflow: hidden; */
 }
 /* 공통 디자인 설정요소 */
 /* Typography */
@@ -66,13 +75,13 @@ input[type='range'] {
   background-color: #c4c4c4;
   margin: 7px 0 4px 0;
 }
-  /* 슬라이더 왼쪽 색 */
-input[type='range']::-webkit-slider-runnable-track {
+  /* 슬라이더 컬러 */
+/* input[type='range']::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   height: 6px;
   border-radius: 3px;
   color: #FFDB4C;
-}
+} */
   /* 슬라이더 버튼 */
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -83,6 +92,9 @@ input[type='range']::-webkit-slider-thumb {
   background: #FF5F00;
   cursor: pointer;
   margin-top: -9px;
+}
+.bank_acct input[type='range']::-webkit-slider-thumb{
+  cursor: default;
 }
 /* overflow 스크롤 기능 */
 .use_history_detail, .saving{
@@ -97,9 +109,10 @@ input[type='range']::-webkit-slider-thumb {
 }
 /* main 화면 */
 main { 
+  display: none;
   background-color: #EEEBE5;
   position: relative; /* 사용내역 영역 위치 기준점 */
-  padding-top: 12px;
+  padding-top: 44px;
   box-sizing: border-box;
   height: 100%;
 }
@@ -108,7 +121,7 @@ header{
   display: flex;
   position: relative;
   min-height: 43px;
-  margin: 0 21px 33px 27px;
+  margin: 12px 21px 33px 27px;
   flex-direction: row;
   align-items: center;
 }
@@ -210,8 +223,8 @@ header .search_helper > li > button > img{
 .bank_use_history{
   position: absolute;
   /* height: 100vh; */
-  top: 309px; /* app_scran 출력 기준 디폴트위치값*/
-  /* top: 68px; */
+  top: 353px; /* app_scran 출력 기준 디폴트위치값*/
+  /* top: 112px; */
   /*최대 top 위치*/
   right: 0;
   left: 0;
@@ -232,9 +245,8 @@ header .search_helper > li > button > img{
 }
 /* 저금통 */
 .saving {
-  border: 1px solid black;
   width: 315px;
-  margin: 12.28px 30px 9px;
+  margin: 12.28px 30px 17px;
   overflow-x: scroll ;
 }
 .saving ul{
@@ -274,8 +286,6 @@ header .search_helper > li > button > img{
 }
 .saving .add_saving > a { 
   display: inline-block;
-  border: 1px solid black;
-  cursor: pointer;
 }
 .saving .add_saving > a > img{
   vertical-align: middle;
@@ -284,10 +294,15 @@ header .search_helper > li > button > img{
   vertical-align: -1px;
   margin-left: 6px;
 }
-/* 일자 별 사용내역 */
+/* 세부 사용내역 */
 .use_history_detail{
+  position: absolute;
+  /* 부모absolute(.bank_use_history)를 기준*/
+  top: 89px;
+  bottom: 0;
+  /* .bank_use_history의 상하 드래그에 따라 크기 조절 */
+  background-color: pink;
   width: 100%;
-  height: 558px;
   overflow-y: scroll;
 }
 .use_history_detail > ul{
@@ -323,9 +338,67 @@ header .search_helper > li > button > img{
   float: right;
 }
 
-
-
 /* 지출관리 설정 페이지 */
 .out_manage_page{
-  margin-top: 50px;
+  background-color: #FFF;
+  width: 100%;
+  padding-top: 44px;
+}
+.out_manage_page h3{
+  font-size: 18px;
+  color: #444;
+}
+.out_manage_page .header{
+  height: 69px;
+  box-sizing: border-box;
+  padding-top: 33px; /* main_contetn_warp의 margin-top 투과 방지 */
+}
+.out_manage_page .header h1{
+  display: inline;
+  font-size: 24px;
+  margin-left: 30px;
+}
+.out_manage_page .main_content_warp{
+  border: 1px solid red;
+}
+.out_manage_page section{
+  border: 1px solid black;
+  margin: 0 30px;
+}
+/* margin-top 투과 방지를 위해 bottom으로 거리간격 조절 */
+.out_manage_page .set_budget{
+  padding-top: 16px;
+  margin-bottom: 59px;
+}
+.set_budget > span{ 
+  font-size: 24px;
+  color: #FF5F00;
+}
+.set_budget > div{
+  height: 28px;
+  background-color: pink;
+}
+.set_budget .budget_setting_bar{
+  width: 100%;
+}
+/* 슬라이더 크기 변경 */
+.set_budget input[type='range'] {
+  height: 9px;
+  border-radius: 3px;
+  margin: 10.5px 0 8.5px 0;
+}
+  /* 슬라이더 버튼 크기 변경 */
+.set_budget input[type='range']::-webkit-slider-thumb {
+  height: 32px; /* 28px + 4px(보더값)*/
+  width: 12px; /* 8px + 4px(보더값)*/
+  border-radius: 2px;
+  margin-top: -1px;
+  border-color: #EEEBE5;
+}
+.out_manage_page .daily_report{
+  margin-bottom: 46px;
+}
+
+.out_manage_page .monthly_out_pattern{
+  margin-bottom: 30px;
 }
