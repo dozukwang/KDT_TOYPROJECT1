@@ -1,29 +1,110 @@
 //서버에서 데이터 불러오기
 const url = 'https://syoon0624.github.io/json/test.json';
 
+//함수
+//1. 신규와 기존내역의 date 비교함수
+function dateMatch(findDate, dateParse) {
+
+  for (let i = 0; i < findDate.length; ++i) {
+    if (findDate[i].textContent == dateParse) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+//2. 숫자 세자리수 마다 쉼표
+
 const reqObj = new XMLHttpRequest();
 reqObj.open('GET', url);
 reqObj.responseType = 'json';
 reqObj.send();
 reqObj.addEventListener('load', work);
 function work() {
-    const bankList = reqObj.response;
-    //사용할 데이터 변수에 저장
-    // const income = [];
+    const rawData = reqObj.response;
+    const bankList = rawData.bankList;
+    const september = [];
+    const october = [];
 
-    // const classify = [];
+    //월별 내역 분리하기
+    bankList.forEach( function(object){
+      const date = object.date.split('-');
+      if (date[1] === '09') {september.push(object);}
+      else if (date[1] === '10') {october.push(object)}
+    });
+  
+    //세부 사용내역에 data 반영하기
+    const useHistoryDetail = document.querySelector('.history_detail_wrap')
+    console.log(useHistoryDetail);
 
-    // const history = [];
+    //기입될 날짜 X월Y일 형태로 변경하기
+    september.forEach( function(object, idx){
 
-    //const date = [];
+      const dateSplit = object.date.split('-');
+      const dateParse = `${parseInt(dateSplit[1])}월${parseInt(dateSplit[2])}일`
+  
+      // X월Y일 기록의 세부 사용내역 존재여부 확인
+      const findDate = document.querySelectorAll('.date');
+      // 기존과 신규내역의 date 비교 함수 실행
+      const index = dateMatch(findDate, dateParse);
 
-    //const price = [];
+      if (index != -1) { //기존내역이 있으면 index = 기존내역의 date위치
+        //신규 사용내역만 추가하기
+        const parent = document.createElement('li');
+        const child1 = document.createElement('span');
+        child1.classList.add('used_name');
+        child1.textContent = object.history;
+        const child2 = document.createElement('span');
+        child2.classList.add('used_amount');
+        if (object.income === "in") {
+          child2.textContent = `+ ${object.price}`;
+          child2.classList.add('money_red')
+        } else {child2.textContent = object.price;}
+        parent.appendChild(child1);
+        parent.appendChild(child2);
+        findDate[index].parentNode.parentNode.children[1].appendChild(parent);
+      } 
+      else { //기존내역이 없으면 index = -1
+        //새로운 사용내역 칸 자체를 추가하기
+        const dailyUsed = document.createElement('li');
+        dailyUsed.classList.add('daily_used');
+        const dayInfo = document.createElement('div');
+        dayInfo.classList.add('day_info');
+        const diDate = document.createElement('span');
+        diDate.classList.add('date');
+        diDate.textContent = dateParse;
+        const diDayTotal = document.createElement('span');
+        diDayTotal.classList.add('day_total')
+        dayInfo.appendChild(diDate);
+        dayInfo.appendChild(diDayTotal);
+        dailyUsed.appendChild(dayInfo);
+        useHistoryDetail.appendChild(dailyUsed);
 
-    // 데이터를 받아 실행할 함수들
-}
+        //신규 사용내역 추가하기
+        const ancient = document.createElement('ul');
+        ancient.classList.add('daily_used_list');
+        const parent = document.createElement('li');
+        const child1 = document.createElement('span');
+        child1.classList.add('used_name');
+        child1.textContent = object.history;
+        const child2 = document.createElement('span');
+        child2.classList.add('used_amount');
+        if (object.income === "in") {
+          child2.textContent = `+ ${object.price}`;
+          child2.classList.add('money_red')
+        } else {child2.textContent = object.price;}
+        parent.appendChild(child1);
+        parent.appendChild(child2);
+        ancient.appendChild(parent);
+        dailyUsed.appendChild(ancient);
+      }
+  });
+}; 
+
+
+
 //budget_graph 스타일 적용
 const slider = document.getElementsByClassName('budget_setting_bar')
-console.log(slider);
 const value = slider[1].value
 
 //.bank_acct의 budget_graph
@@ -126,15 +207,29 @@ const donutChart = new Chart(donutCanvas, {
 
 
 //지출내역 페이지 toggle
+const outManagePage = document.querySelector('.out_manage_page') //움직일 페이지 불러오기
+const ompOpenBtn = document.querySelector('.omp_open_btn') //페이지 여는 버튼 불러오기
+const ompCloseBtn = document.querySelector('.omp_close_btn') //페이지 닫는 버튼 불러오기
 
+ompOpenBtn.addEventListener('click', openPage) //페이지 열기 감지
 
-//사용내역 상단dhfflrl toggle
-const dragBtn = document.querySelector('.drag_btn')
+function openPage() {
+    outManagePage.classList.add('page_on');
+}
+
+ompCloseBtn.addEventListener('click', closePage) //페이지 닫기 감지
+
+function closePage() {
+  if (outManagePage.classList.contains('page_on')){
+    outManagePage.classList.remove('page_on');
+  }
+}
+
+//사용내역 상단올리기 toggle
+const dragBtn = document.querySelector('.drag_btn');
 const bankUseHistory = document.querySelector('.bank_use_history');
-console.log(bankUseHistory)
-console.log(dragBtn)
 
-dragBtn.addEventListener('click', showUp)
+dragBtn.addEventListener('click', showUp);
 
 function showUp() {
   if (bankUseHistory.classList.contains('page_on')){
