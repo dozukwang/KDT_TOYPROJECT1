@@ -16,6 +16,15 @@
 <body>
   <div class="container">
     <div class="safe_area"></div>
+    <!-- 하단 메뉴 -->
+    <nav>
+      <ul>
+        <li aria-label="계좌화면"><a><img src="./images/Menu.svg" alt="계좌화면 아이콘"/></a></li>
+        <li aria-label="조정"><a><img src="./images/settings.svg" alt="조정 아이콘"/></a></li>
+        <li aria-label="챗봇"><a><img src="./images/chatting.svg" alt="챗봇 아이콘"></a></li>
+        <li aria-label="기타 메뉴"><a><img src="./images/etc.svg " alt="기타 메뉴 아이콘"></a></li>
+      </ul>
+    </nav>
     <div class="app_screen">
       <!-- main 화면 -->
       <main>
@@ -32,13 +41,13 @@
         <section class="bank_acct">
           <div class="bank_acct_info">
             <h3><span>355-673877-78773</span></h3>
-            <div class="acct_amount"><span class="holding_amount">1,240,000</span class="amount_unit">원</div>
+            <div class="acct_amount"><span class="holding_amount">1,240,000</span >원</div>
             <div class="send_money"><button type="button">이체</button></div>
             <div class="budget_info" >
               <div class="budget_graph">
                 <input class="budget_setting_bar" type="range" alt="지출금액 달성도">
               </div>
-                <button type="button" aria-label="지출관리금액 설정 그래프"><img src="./images/out_graph.svg" alt="지출설정 그래프"/></button>
+                <button class="omp_open_btn" type="button" aria-label="지출관리금액 설정 그래프"><img src="./images/out_graph.svg" alt="지출설정 그래프"/></button>
               <div class="budget_left"><span>5일 동안 210,000원 남음</span></div>
               <!-- js 구현 => (`${left_day}일남음 {left_won}원 남음`) -->
             </div>
@@ -52,15 +61,15 @@
           <!-- 저금통-->
           <div class="saving">
             <ul>
-              <li class="saving_1">
+              <li class="saving_item 1">
                 <span class="saving_goal">여행가자!</span>
                 <span class="saved_amount">842,200원</span>
-                <div></div>
+                <div class="red"></div>
               </li>
-              <li class="saving_2">
+              <li class="saving_item 2">
                 <span class="saving_goal">냉장고사기</span>
                 <span class="saved_amount">142,200원</span>
-                <div></div>
+                <div class="yellow"></div>
               </li>
               <li class="add_saving">
                 <a><img src="./images/circle_plus.svg" alt="플러스 아이콘"><span>저금통 만들기</span></a>
@@ -69,7 +78,7 @@
           </div>
           <!-- 세부 사용내역 -->
           <div class="use_history_detail">
-            <ul>
+            <ul class="history_detail_wrap">
               <!-- 오늘 사용내역 -->
               <li class="daily_used">
                 <div class="day_info">
@@ -99,65 +108,6 @@
                   </li>
                 </ul>
               </li>
-              <!-- 어제 사용내역 -->
-              <li class="daily_used">
-                <div class="day_info">
-                  <span class="date">어제</span>
-                  <span class="day_total">127,600원</span>
-                </div>
-                <ul class="daily_used_list">
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                </ul>
-              </li>
-              <!-- 어제 사용내역 -->
-              <li class="daily_used">
-                <div class="day_info">
-                  <span class="date">어제</span>
-                  <span class="day_total">127,600원</span>
-                </div>
-                <ul class="daily_used_list">
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                  <li>
-                    <span class="used_name">미스터피자</span>
-                    <span class="used_amount">32,000</span>
-                  </li>
-                </ul>
-              </li>
-              <!-- 여기까지 지우기 -->
             </ul>
           </div>
         </section>
@@ -166,8 +116,9 @@
       <div class="out_manage_page">
         <div class="header">
           <h1>지출관리</h1>
+          <button class="omp_close_btn" type="button">닫기</button>
         </div>
-        <div class="main_content_warp">
+        <div class="main_content_wrap">
           <section class="set_budget">
             <h3>기준금액설정</h3>
             <span>2,100,000원</span>
@@ -177,36 +128,28 @@
           </section>
           <section class="daily_report">
             <h3>일간 리포트</h3>
-            <canvas class ="bar_graph"></canvas>
-          </section>
+            <div>
+              <canvas class ="bar_graph"></canvas>
+            </div>
+            </section>
           <section class="monthly_out_pattern">
             <h3>6월 지출패턴</h3>
-            <div class ="donut_graph">
-              <canvas></canvas>
-              <div><span>1,736,500</span><span>원</span></div>
+            <div>
+              <canvas class="donut_graph"></canvas>
+              <div class="total_monthly_out">
+              <span class="monthly_amount">1,736,500</span><span >원</span>
+              </div>
             </div>
-            <ul class ="out_category">
-              <li><img src="./images/car.svg" alt="주유비 아이콘"/><span class="left">주유비</span><span class="right">50,000원</span></li>
-              <li><img src="./images/health.svg" alt="건강 아이콘"/><span class="left">건강관리비</span><span class="right">80,000원</span></li>
-              <li><img src="./images/eat.svg" alt="식비 아이콘"/><span class="left">외식비</span><span class="right">233,000원</span></li>
-              <li><img src="./images/grocery.svg" alt="장보기 아이콘"/><span class="left">장보기</span><span class="right">390,000원</span></li>
-              <li><img src="./images/shopping.svg" alt="상점 아이콘"/><span class="left">상점</span><span class="right">46,000원</span></li>
+            <ul class ="out_list">
+              <li><img src="./images/car.svg" alt="주유비 아이콘"/><span class="out_category">주유비</span><span class="out_amount">50,000원</span></li>
+              <li><img src="./images/health.svg" alt="건강 아이콘"/><span class="out_category">건강관리비</span><span class="out_amount">80,000원</span></li>
+              <li><img src="./images/eat.svg" alt="식비 아이콘"/><span class="out_category">외식비</span><span class="out_amount">233,000원</span></li>
+              <li><img src="./images/grocery.svg" alt="장보기 아이콘"/><span class="out_category">장보기</span><span class="out_amount">390,000원</span></li>
+              <li><img src="./images/shopping.svg" alt="상점 아이콘"/><span class="out_category">상점</span><span class="out_amount">46,000원</span></li>
             </ul>
           </section>
-        </div>
-          <button type="button">닫기</button>
-        </div>
       </div>
-      <!-- 하단 메뉴 -->
-      <nav>
-        <ul>
-          <li aria-label="계좌화면"><a><img src="./images/Menu.svg" alt="계좌화면 아이콘"/></a></li>
-          <li aria-label="조정"><a><img src="./images/settings.svg" alt="조정 아이콘"/></a></li>
-          <li aria-label="챗봇"><a><img src="./images/chatting.svg" alt="챗봇 아이콘"></a></li>
-          <li aria-label="기타 메뉴"><a><img src="./images/etc.svg " alt="기타 메뉴 아이콘"></a></li>
-        </ul>
-      </nav>
-    </div>
+  </div>
   </body>
   </html>
   
