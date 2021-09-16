@@ -1,7 +1,6 @@
 /* reset */
 button{
   background: inherit ; border:none; box-shadow:none; border-radius:0; padding:0; overflow:visible; cursor:pointer;}
-
 ul,li{
   list-style: none;
 }
@@ -12,7 +11,6 @@ a{cursor: pointer;}
   width: 375px;
   min-width: 375px;
   height: 812px;
-  /* border: 1px solid red; */
   overflow: hidden;
 }
 /* safe area */
@@ -46,14 +44,14 @@ body{font-family: 'Noto Sans KR', sans-serif; font-size: 14px; font-weight: 500;
 /*color variation*/
 .red{background-color: #FF5F00;}
 .yellow{background-color: #FEB700;}
-.green{background-color: #a1ed3d;}
+.green{background-color: #9FC93C;}
 .blue{background-color: #3c74d5;}
 .purple{background-color: #c16fe9;}
 .money_red{color: #FF5F00;}
-
 /* nav */
 nav ul {
-  margin: 15px 30px 0;
+  width: 315px;
+  margin: 15px auto 0;
   font-size: 0;
 }
 nav ul > li{
@@ -156,7 +154,6 @@ header .search_helper > li + li{
 header .search_helper > li > button > img{
   vertical-align: middle;
 }
-
 /* bank_acct */
 .bank_acct_info{
   border-radius: 12px;
@@ -207,7 +204,6 @@ header .search_helper > li > button > img{
   line-height: 21px;
   color:#858585;
 }
-
 /* 공지(notice) */
 .notice{
   margin: 24px 0 21px;
@@ -256,7 +252,7 @@ header .search_helper > li > button > img{
 /* 저금통 */
 .saving {
   width: 315px;
-  margin: 12.28px 30px 17px;
+  margin: 12.28px auto 17px;
   overflow-x: scroll ;
 }
 .saving ul{
@@ -367,8 +363,8 @@ header .search_helper > li > button > img{
 }
 .out_manage_page .header{
   position: absolute;
-  height: 69px; /* */
-  width: 375px;
+  height: 69px;
+  width: 100%;
   box-sizing: border-box;
   background-color: #FFF;
   padding-top: 33px;
