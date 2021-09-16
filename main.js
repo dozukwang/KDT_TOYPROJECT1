@@ -2,7 +2,7 @@
 const url = 'https://syoon0624.github.io/json/test.json';
 
 //함수
-//1. 신규와 기존내역의 date 비교함수
+//신규내역과 기존내역의 date 비교함수
 function dateMatch(findDate, dateParse) {
 
   for (let i = 0; i < findDate.length; ++i) {
@@ -12,8 +12,6 @@ function dateMatch(findDate, dateParse) {
   }
   return -1;
 }
-
-//2. 숫자 세자리수 마다 쉼표
 
 const reqObj = new XMLHttpRequest();
 reqObj.open('GET', url);
@@ -26,16 +24,25 @@ function work() {
     const september = [];
     const october = [];
 
+    const total = {};
+  
     //월별 내역 분리하기
     bankList.forEach( function(object){
       const date = object.date.split('-');
-      if (date[1] === '09') {september.push(object);}
-      else if (date[1] === '10') {october.push(object)}
+      if (date[1] === '09') {september.unshift(object);}
+      else if (date[1] === '10') {october.unshift(object)}
+
+      const dateParse = `${parseInt(date[1])}월${parseInt(date[2])}일`
+
+      if (dateParse in total) {
+        total[dateParse] = total[dateParse] + object.price;
+      } else {
+        total[dateParse] = object.price;
+      }
     });
   
     //세부 사용내역에 data 반영하기
     const useHistoryDetail = document.querySelector('.history_detail_wrap')
-    console.log(useHistoryDetail);
 
     //기입될 날짜 X월Y일 형태로 변경하기
     september.forEach( function(object, idx){
@@ -47,7 +54,8 @@ function work() {
       const findDate = document.querySelectorAll('.date');
       // 기존과 신규내역의 date 비교 함수 실행
       const index = dateMatch(findDate, dateParse);
-
+      const price = object.price.toString()
+      .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); //정규표현식, 천의 자리 마다 쉼표(,)
       if (index != -1) { //기존내역이 있으면 index = 기존내역의 date위치
         //신규 사용내역만 추가하기
         const parent = document.createElement('li');
@@ -57,9 +65,9 @@ function work() {
         const child2 = document.createElement('span');
         child2.classList.add('used_amount');
         if (object.income === "in") {
-          child2.textContent = `+ ${object.price}`;
+          child2.textContent = `+ ${price}`;
           child2.classList.add('money_red')
-        } else {child2.textContent = object.price;}
+        } else {child2.textContent = price;}
         parent.appendChild(child1);
         parent.appendChild(child2);
         findDate[index].parentNode.parentNode.children[1].appendChild(parent);
@@ -74,6 +82,9 @@ function work() {
         diDate.classList.add('date');
         diDate.textContent = dateParse;
         const diDayTotal = document.createElement('span');
+        diDayTotal.textContent = `${total[dateParse].toString()
+        .replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")}원`;
+
         diDayTotal.classList.add('day_total')
         dayInfo.appendChild(diDate);
         dayInfo.appendChild(diDayTotal);
@@ -90,9 +101,9 @@ function work() {
         const child2 = document.createElement('span');
         child2.classList.add('used_amount');
         if (object.income === "in") {
-          child2.textContent = `+ ${object.price}`;
+          child2.textContent = `+ ${price}`;
           child2.classList.add('money_red')
-        } else {child2.textContent = object.price;}
+        } else {child2.textContent = price;}
         parent.appendChild(child1);
         parent.appendChild(child2);
         ancient.appendChild(parent);
@@ -203,8 +214,32 @@ const donutChart = new Chart(donutCanvas, {
 });
 
 
-//color module 적용
+//color module 적용하기
+const colorChangableItem = document.querySelectorAll('.saving_item');
 
+//saving_item을 가진 개별 요소들에게 클릭이벤트 설정
+for (let i = 0; i < colorChangableItem.length; i++){
+  colorChangableItem[i].addEventListener('click', function(){changeColor(colorChangableItem[i])});
+};
+//클릭이벤트가 발생하면 정해진 순서 색대로 돌면서 color module 변경
+function changeColor(element){
+  if (element.children[2].classList.contains('red')){
+    element.children[2].classList.remove('red');
+    element.children[2].classList.add('yellow');
+  } else if (element.children[2].classList.contains('yellow')){
+    element.children[2].classList.remove('yellow');
+    element.children[2].classList.add('green');
+  } else if (element.children[2].classList.contains('green')){
+    element.children[2].classList.remove('green');
+    element.children[2].classList.add('blue');
+  } else if (element.children[2].classList.contains('blue')){
+    element.children[2].classList.remove('blue');
+    element.children[2].classList.add('purple');
+  } else if (element.children[2].classList.contains('purple')){
+    element.children[2].classList.remove('purple');
+    element.children[2].classList.add('red');
+  }
+};
 
 //지출내역 페이지 toggle
 const outManagePage = document.querySelector('.out_manage_page') //움직일 페이지 불러오기
